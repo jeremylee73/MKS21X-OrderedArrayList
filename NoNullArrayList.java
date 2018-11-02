@@ -23,4 +23,11 @@ public class NoNullArrayList<E> extends ArrayList<E> {
     }
     return super.add(element);
   }
+
+  public void add(int index, E element){
+    if (element == null){
+      throw new IllegalArgumentException();
+    }
+    super.add(index, element);
+  }
 }
