@@ -7,25 +7,31 @@ public class OrderedArrayList<E extends Comparable<E>> extends NoNullArrayList<E
     super(startingCapacity);
   }
 
-  public boolean add(E element) {
-    if (super.size()==0) {
-      super.add(element);
+  public boolean add(E value) {
+    if (value == null) {
+      throw new IllegalArgumentException("Cannot add null");
     }
-    for (int i=0; i<super.size(); i++){
-      if (i==0 && element.compareTo(super.get(i)) >= 0){
-        super.add(0, element);
-      }
-      if (element.compareTo(super.get(i)) < 0) {
-        super.add(i, element);
+    for (int i = 0; i < size(); i++) {
+      if (value.compareTo(this.get(i)) <= 0) {
+        super.add(i, value);
+        return true;
       }
     }
+    super.add(0, value);
     return true;
   }
 
-  public E set(int index, E element){
-    E original = super.get(index);
-    super.remove(index);
-    super.add(element);
-    return original;
+  public void add(int index, E value) {
+    this.add(value);
+  }
+
+  public E set(int i, E value) {
+    if (value == null) {
+      throw new IllegalArgumentException("Cannot set value to null");
+    }
+    E old = this.get(i);
+    super.remove(i);
+    add(value);
+    return old;
   }
 }
